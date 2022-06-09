@@ -11,9 +11,6 @@ env:
 jobs:
   release:
     runs-on: ubuntu-latest                            # GitHub Runner OS
-    permissions:
-      contents: read
-      packages: write
 
     steps:
       - name: Checkout source code                    # Checksout the repository in the GitHub runner
