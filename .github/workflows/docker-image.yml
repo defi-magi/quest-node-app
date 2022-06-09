@@ -11,10 +11,13 @@ env:
 jobs:
   release:
     runs-on: ubuntu-latest                            # GitHub Runner OS
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       - name: Checkout source code                    # Checksout the repository in the GitHub runner
-        uses: 'actions/checkout@v2'                   
+        uses: 'actions/checkout@v3'                   
         with:
           ref: ${{ github.ref }}
 
@@ -30,14 +33,14 @@ jobs:
         run: echo "new tag $NEW_TAG"
 
       - name: Log into registry ${{ env.REGISTRY }}   # Log into the container registry from GitHub runner
-        uses: docker/login-action@v1
+        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
         with:
           registry: ${{ env.REGISTRY }}              # Uses the env defined above
           username: ${{ github.actor }}   # GitHub Secret added to the repository
           password: ${{ secrets.GITHUB_TOKEN }}   # GitHub Secret added to the repository
 
       - name: Build and push Docker image            # Builds and pushes the image to the conatiner registry
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: ./docker                          # Folder where the Dockerfile resides, use `/` if in root path
           push: ${{ github.event_name != 'pull_request' }}
