@@ -11,6 +11,10 @@ env:
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: read
+      packages: write
 
     steps:
       - name: Checkout source code
@@ -22,7 +26,7 @@ jobs:
         id: version-bump
         uses: 'phips28/gh-action-bump-version@v9.0.20'
         env:
-          GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Output Step
         env:
@@ -34,7 +38,7 @@ jobs:
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
-          password: ${{ secrets.MY_TOKEN }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
