@@ -23,7 +23,7 @@ jobs:
 
       - name: Automated Version Bump                  # This action step reads and updates the version number acc to commit message
         id: version-bump
-        uses: 'phips28/gh-action-bump-version@master'
+        uses: 'phips28/gh-action-bump-version@v9.0.20'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
