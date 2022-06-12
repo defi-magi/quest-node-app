@@ -1,0 +1,10 @@
+apiVersion: v2
+name: quest-node-app
+type: application
+description: Quest challenge app
+version: 1.0.0
+
+dependencies:
+  - name: quest-secret
+    repository: file://charts/quest-secret
+    version: 1.0.0

@@ -1,0 +1,24 @@
+global:
+  secret:
+    name: quest-node-app-rearc-secret
+    key: super-secret
+
+namespace: quest-node-apps
+
+hostname: node.quest.defimagi.com
+
+image:
+  name: ghcr.io/defi-magi/quest-node-app
+  tag: v1.1.11
+  pull: IfNotPresent
+ 
+deployment:
+  timestamp: 2006-01-02T15:04:05
+  replicas: 3
+  container:
+    name: quest-node-app
+    port: 3000
+
+service:
+  type: ClusterIP
+  port: 8080

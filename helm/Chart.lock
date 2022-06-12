@@ -1,0 +1,6 @@
+dependencies:
+- name: quest-secret
+  repository: file://charts/quest-secret
+  version: 1.0.0
+digest: sha256:9ef03d05137e2422386bdb7c4c7901701b872c106325308fc06ab9e169aedc11
+generated: "2022-06-11T23:45:25.421005-06:00"

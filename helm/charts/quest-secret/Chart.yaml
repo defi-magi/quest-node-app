@@ -1,0 +1,5 @@
+apiVersion: v2
+name: quest-secret
+type: application
+description: A secret to sync
+version: 1.0.0

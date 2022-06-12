@@ -1,0 +1,9 @@
+.git
+.github
+.dockerignore
+.gitignore
+*.md
+Makefile
+helm/
+.git/
+.DS_Store/
