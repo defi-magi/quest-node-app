@@ -46,6 +46,7 @@ jobs:
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:v${{ steps.version-bump.outputs.newTag }}
   cd:
+    needs: [ci]
     runs-on: ubuntu-latest
     steps:
       - name: Download repository
