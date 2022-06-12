@@ -72,7 +72,9 @@ jobs:
           mv linux-amd64/helm /usr/local/bin/helm
           helm version
       - name: Lint helm charts
-        run: helm lint ./helm/
+        run: |
+          ls -la
+          helm lint ./helm/
       - name: Deploy
         run: |
           helm dependency build ./helm
