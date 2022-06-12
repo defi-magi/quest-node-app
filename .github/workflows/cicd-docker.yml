@@ -81,5 +81,5 @@ jobs:
       - name: Deploy
         run: |
           helm dependency build .
-          helm upgrade --install --atomic --timeout 1m rest . -f ./values.yaml \
+          helm upgrade --install --atomic --timeout 1m quest-node-apps . -f ./values.yaml \
             --namespace quest-node-apps --set image.tag=v${{ needs.ci.outputs.semantic-tag }}
