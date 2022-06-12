@@ -1,5 +1,4 @@
-.tgz
-*.tgz
 .git
-.tar
-.gz
+*.tgz
+*.tar
+*.gz
