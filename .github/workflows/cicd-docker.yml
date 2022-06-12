@@ -73,11 +73,11 @@ jobs:
           helm version
       - name: Lint helm charts
         run: |
-          echo "this is the tag ${{ needs.ci.version-bump.outputs.newTag }}"
+          echo "this is the tag ${{ needs.ci.outputs.newTag }}"
           ls -la
           helm lint .
       - name: Deploy
         run: |
           helm dependency build .
           helm upgrade --install --atomic --timeout 1m rest . -f ./values.yaml \
-            --namespace quest-node-apps --set image.tag=v${{ needs.ci.version-bump.outputs.newTag }}
+            --namespace quest-node-apps --set image.tag=v${{ needs.ci.outputs.newTag }}
