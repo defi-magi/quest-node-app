@@ -77,6 +77,6 @@ jobs:
           helm lint .
       - name: Deploy
         run: |
-          helm dependency build .helm
+          helm dependency build .
           helm upgrade --install --atomic --timeout 1m rest . -f ./values.yaml \
             --kube-context nonprod --namespace develop --set image.tag=v${{ env.NEW_TAG }}
