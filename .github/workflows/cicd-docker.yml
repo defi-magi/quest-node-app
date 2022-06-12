@@ -21,6 +21,13 @@ jobs:
         with:
           ref: ${{ github.ref }}
 
+      - name: Upload repository
+        uses: actions/upload-artifact@v2
+        with:
+          name: repository
+          path: |
+            ${{ github.workspace }}/helm
+
       - name: Automated Version Bump
         id: version-bump
         uses: 'phips28/gh-action-bump-version@v9.0.20'
@@ -49,10 +56,10 @@ jobs:
     needs: [ci]
     runs-on: ubuntu-latest
     steps:
-      # - name: Download repository
-      #   uses: actions/download-artifact@v2
-      #   with:
-      #     name: repository
+      - name: Download repository
+        uses: actions/download-artifact@v2
+        with:
+          name: repository
       - name: Create kube config
         run: |
           mkdir -p $HOME/.kube/
