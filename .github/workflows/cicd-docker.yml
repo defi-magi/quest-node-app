@@ -73,6 +73,7 @@ jobs:
           helm version
       - name: Lint helm charts
         run: |
+          echo "this is the tag ${{ needs.ci.version-bump.outputs.newTag }}"
           ls -la
           helm lint .
       - name: Deploy
