@@ -80,6 +80,7 @@ Navigate here to view the app: https://node.quest.defimagi.com
    - Containerized using `node:10` 
 4. Inject an environment variable (`SECRET_WORD`) in the Docker container. The value of `SECRET_WORD` should be the secret word discovered on the index page of the application.
    - Index page does not recognize the instance metadata since it's an abstracted container running on EKS, but I was able to mount my own Secret from Secrets Manager
+     - NOTE: Node Group is using IMDSv2 with a hop count limit of `2`
    - `This is running in EKS - the index page doesn't recognize it as public cloud.` when you navigate to https://node.quest.defimagi.com/secret_word
 5. Deploy a load balancer in front of the app.
    - Routing traffic with NGINX and AWS NLB
