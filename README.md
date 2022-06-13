@@ -1,8 +1,24 @@
+- [Links](#links)
+- [A Quest in the Clouds](#a-quest-in-the-clouds)
+  - [Wish List](#wish-list)
+  - [Quest Tasks](#quest-tasks)
+  - [Provisioning Flows](#provisioning-flows)
+    - [CI/CD](#cicd)
+    - [ArgoCD](#argocd)
+
+# Links
+For easy reference, but please go through this README first!
+
+| Component | Link                            | Notes                                |
+|-----------|---------------------------------|--------------------------------------|
+| Quest App | https://node.quest.defimagi.com | Running on EKS, https redirect works |
+| ArgoCD    | https://argo.quest.defimagi.com | ArgoCD GUI to view bootstrap config  |
+
 # A Quest in the Clouds
 So what was this journey all about? The asks were clearly outlined but there is some learning that I wanted to get out of this exercise as well; what were those goals and how did I do?
 
-![Wizard](./static/wizard.png)
-> "One has to remember the journey before destination." - Infra Wizard
+![Journey](./static/stormlight.jpeg)
+> "Journey before destination." - First Ideal of the Immortal Words
 
 **Goal 01**
 
@@ -32,7 +48,7 @@ Demonstrate ArgoCD GitOps based bootstrap pattern.
 
 Outcome: Success! Barebones bootstrapping with Terraform --> point cluster to source of truth Git repo --> magic. More details below!
 
-## What else?
+## Wish List
 What else I wanted to do but didn't get to:
 - Use free tier of Terraform Cloud to automate TF deploys
 - Use free tier of Datadog to monitor the cluster
@@ -64,7 +80,36 @@ Navigate here to view the app: https://node.quest.defimagi.com
    - Containerized using `node:10` 
 4. Inject an environment variable (`SECRET_WORD`) in the Docker container. The value of `SECRET_WORD` should be the secret word discovered on the index page of the application.
    - Index page does not recognize the instance metadata since it's an abstracted container running on EKS, but I was able to mount my own Secret from Secrets Manager
-   - 
+   - `This is running in EKS - the index page doesn't recognize it as public cloud.` when you navigate to https://node.quest.defimagi.com/secret_word
 5. Deploy a load balancer in front of the app.
+   - Routing traffic with NGINX and AWS NLB
+   - NLB is in public subnets and node group is in private subnets
+   - Nodes and Pods are load balanced across 3 AZs
 6. Use Infrastructure as Code (IaC) to "codify" your deployment. Terraform is ideal, but use whatever you know, e.g. CloudFormation, CDK, Deployment Manager, etc.
+   - Entire project captured in Terraform code, EKS cluster bootstrapped using ArgoCD
 7. Add TLS (https). You may use locally-generated certs.
+   - Using cert-manager with LetsEncrypt on the quest.defimagi.com domain
+   - Certificates pre-populated by bootstrap process
+     - Automatically issued by cert-manager using txt record validation in the quest.defimagi.com sub-domain
+   - External DNS automatically populates A records for Ingress objects
+
+## Provisioning Flows
+What's actually happening?
+
+### CI/CD
+1. Commit on `main` branch triggers GitHub Actions defined in the [.github/templates/cicd-docker.yaml](.github/workflows/cicd-docker.yml)
+2. CI
+   - Dockerfile is used to build the Quest app
+   - Semantic versioning is used to bump the version
+3. CD
+   - Kubeconfig created from environment variable
+     - ServiceAccount from which the Kubeconfig is generated from is scoped only to the `quest-node-apps` Namespace
+   - Helm installed
+   - App deployed using Helm
+     - Subchart for secret goes first
+     - Main application is then deployed
+
+### ArgoCD
+The diagram below captures the high level flow and pattern for how the infrastructure is provisioned.
+
+![GitOps Bootstrap](./static/terraform-argo-bootstrap-flow.png)
