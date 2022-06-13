@@ -80,5 +80,5 @@ jobs:
           helm lint .
       - name: Deploy
         run: |
-          helm upgrade --install --atomic --timeout 1m quest-node-apps . -f ./values.yaml \
+          helm upgrade --install --atomic --timeout 1m quest-node-app . -f ./values.yaml \
             --namespace quest-node-apps --set image.tag=v${{ needs.ci.outputs.semantic-tag }}
