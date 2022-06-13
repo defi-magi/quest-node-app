@@ -25,14 +25,14 @@ So what was this journey all about? The asks were clearly outlined but there is 
 Learn basic GitHub actions workflows
 - Kept hearing how awesome these were so I wanted to try out the workflows
 
-Outcome: Success! Able to build, version and deploy the containerized Quest app to EKS using Actions. I haven't build pipelines in a while, this was a good refresher.
+Outcome: Success! Able to build, version and deploy the containerized Quest app to EKS using Actions. I haven't built pipelines in a while, this was a good refresher.
 
 **Goal 02**
 
 Use [Podman](https://podman.io/getting-started/) instead of Docker 
 - It's like Docker, but better, right?
 
-Outcome: Semi-success! Was able to build the Podman container but not able to test it locally on M1 silicon. Podman only runs on linux and in order to do builds on Mac it requires a VM - port forwarding wasn't working correctly, switched to Docker to avoid time sync. Overall this seems like a good alternative to Docker, you can even use the same commands.
+Outcome: Semi-success! Was able to build the Podman container but not able to test it locally on M1 silicon. Podman only runs on linux and in order to do builds on Mac it requires a VM - port forwarding wasn't working correctly, switched to Docker to avoid time sink. Overall this seems like a good alternative to Docker, you can even use the same commands.
 
 **Goal 03**
 
